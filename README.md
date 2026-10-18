@@ -23,6 +23,23 @@ Open http://localhost:5173. Admin is at `/admin` (token = `ADMIN_TOKEN` in `serv
 
 Production: `npm run build && npm start` serves the built React app from the Express server on `PORT`.
 
+## Deploy to Vercel
+
+The project is preconfigured for unified Vercel deployment (Vite React frontend + Express serverless API) via `vercel.json` and `api/index.js`.
+
+### Quick Steps:
+1. Push this repository to GitHub / GitLab / Bitbucket.
+2. In the [Vercel Dashboard](https://vercel.com), click **Add New Project** and select your repository.
+3. Keep default settings (the `vercel.json` handles build commands and output routing automatically).
+4. In **Environment Variables**, add any required secrets (see `server/.env.example`):
+   - `ADMIN_TOKEN`: Your secret token for the admin panel.
+   - `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, etc. (leave blank to run in mock mode).
+   - *(Note: `CLIENT_URL` and `SERVER_URL` automatically default to your Vercel URL `https://your-project.vercel.app` if left blank).*
+5. Click **Deploy**.
+
+> [!NOTE]
+> On Vercel, serverless function runtimes use an ephemeral filesystem. The built-in JSON database safely writes to `/tmp` and seeds catalog items automatically. For production data persistence across serverless cold starts, migrate `server/src/db.js` to an external database (e.g. Supabase, Neon Postgres, or MongoDB Atlas).
+
 ## What to fill in to make each feature live
 
 | Feature | Minimum details needed | Guide |
